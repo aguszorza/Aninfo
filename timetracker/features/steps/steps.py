@@ -17,9 +17,10 @@ def step_impl(context):
     context.form['developer'] = Developer.objects.all()[0].id
 
 
-@when(u'i selected a task')
+@when(u'i selected a task from that developer and that project')
 def step_impl(context):
-    context.form['task'] = Task.objects.all()[0].id
+    context.form['task'] = Task.objects.filter(project__id = context.form['project'], 
+                                                developer__id = context.form['developer'])[0].id
 
 
 @when(u'i chose 6 hours')
@@ -28,7 +29,8 @@ def step_impl(context):
 
 @when(u'i selected a task from other developer')
 def step_impl(context):
-    context.form['task'] = Task.objects.all()[10].id
+    context.form['task'] = Task.objects.filter(project__id = context.form['project']).exclude(
+                                                developer__id = context.form['developer'])[0].id
 
 @when(u'i submit the form')
 def step_impl(context):
@@ -47,3 +49,8 @@ def step_impl(context):
 def step_impl(context):
     assert context.response.context['error']
     assert Task.objects.get(pk=context.form['task']).completedTime == 0
+
+@then(u'task will be completed with 6 hours')
+def step_impl(context):
+    assert Task.objects.get(pk=context.form['task']).completedTime == 6
+    assert context.response.context['success']
