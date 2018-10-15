@@ -1,0 +1,5 @@
+preguntar: el enunciado dice cargar horas por dia, pero nosotros los cargamos cuando se completa la tarea
+
+agregar relacion entre proyecyo y desarrollador
+
+agregar chequeos y pruebas
