@@ -4,7 +4,7 @@ from django.urls import reverse
 from .models import Developer, Task, Project
 
 
-def index(request, success=False, error=''):
+def index(request, success='', error=''):
     developers = Developer.objects.all()
     projects = Project.objects.all()
     tasks = Task.objects.all()
@@ -42,4 +42,4 @@ def completeTask(request):
 
 
 def taskCompleted(request):
-    return index(request, success=True)
+    return index(request, success='True')

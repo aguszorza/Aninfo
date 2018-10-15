@@ -6,6 +6,7 @@ Feature: completing a task
         When i selected a developer
         When i selected a task
         When i chose 6 hours
+        When i submit the form
         Then task will be completed
 
     Scenario: complete a task of other developer
@@ -14,4 +15,5 @@ Feature: completing a task
         When i selected a developer
         When i selected a task from other developer
         When i chose 6 hours
+        When i submit the form
         Then task will not be completed
