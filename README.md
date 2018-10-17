@@ -28,3 +28,10 @@ pip install behave-django
 correr las pruebas:
 
 python3 manage.py behave
+
+
+
+
+Otros:
+
+python3 manage.py makemigrations psatimetracker

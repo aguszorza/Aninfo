@@ -27,30 +27,44 @@ def step_impl(context):
 def step_impl(context):
     context.form['hours'] = 6
 
+@when(u'i chose a date')
+def step_impl(context):
+    context.form['date'] = '2018-10-17'
+
+
 @when(u'i selected a task from other developer')
 def step_impl(context):
     context.form['task'] = Task.objects.filter(project__id = context.form['project']).exclude(
                                                 developer__id = context.form['developer'])[0].id
 
+@when(u'i selected a task from other project')
+def step_impl(context):
+    context.form['task'] = Task.objects.exclude(project__id = context.form['project']).filter(
+                                                developer__id = context.form['developer'])[0].id
+
 @when(u'i submit the form')
 def step_impl(context):
-    url = "/timetracker/completeTask/"
+    url = "/timetracker/completeTaskHours/"
     data = urlencode(context.form)
     context.response = context.test.client.post(url, data, content_type="application/x-www-form-urlencoded", follow=True)
 
 
-@then(u'task will be completed')
+@then(u'task will have worked hours')
 def step_impl(context):
-    assert Task.objects.get(pk=context.form['task']).completedTime > 0
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.all()) > 0
     assert context.response.context['success']
 
-
-@then(u'task will not be completed')
+@then(u'task will have worked hours for that date')
 def step_impl(context):
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.filter(date = context.form['date'])) > 0
+    assert context.response.context['success']
+
+@then(u'task will have worked hours for that date and hours')
+def step_impl(context):
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.filter(date = context.form['date'], hours = context.form['hours'])) > 0
+    assert context.response.context['success']
+
+@then(u'task will not have worked hours')
+def step_impl(context):
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.all()) == 0
     assert context.response.context['error']
-    assert Task.objects.get(pk=context.form['task']).completedTime == 0
-
-@then(u'task will be completed with 6 hours')
-def step_impl(context):
-    assert Task.objects.get(pk=context.form['task']).completedTime == 6
-    assert context.response.context['success']

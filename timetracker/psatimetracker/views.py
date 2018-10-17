@@ -19,27 +19,36 @@ def index(request, success='', error=''):
     return render(request, 'form.html', context)
 
 
-def completeTask(request):
+def completeTaskHours(request):
     try:
         project = get_object_or_404(Project, pk=request.POST['project'])
         developer = get_object_or_404(Developer, pk=request.POST['developer'])
         task = get_object_or_404(Task, pk=request.POST['task'])
         hours = request.POST['hours']
-    except (KeyError):
+        date = request.POST['date']
+
+        error = validateData(project, developer, task, hours, date)
+        if (error):
+            return index(request, error=error)
+
+        saveHours(task, hours, date)
+        return HttpResponseRedirect(reverse('psatimetracker:completedTaskHours'))
+
+    except:
         return index(request, error='Ocurrio un error')
-    else:
-
-        if (task.developer != developer):
-            return index(request, error='La tarea seleccionada no pertenece al desarrollador')
-
-        if (task.project != project):
-            return index(request, error='La tarea seleccionada no pertenece al proyecto')
-
-        task.completedTime = hours
-        task.save()
-        
-        return HttpResponseRedirect(reverse('psatimetracker:taskCompleted'))
 
 
-def taskCompleted(request):
+def validateData(project, developer, task, hours, date):
+    if (task.developer != developer):
+            return 'La tarea seleccionada no pertenece al desarrollador'
+
+    if (task.project != project):
+        return 'La tarea seleccionada no pertenece al proyecto'
+
+    return ''
+
+def saveHours(task, hours, date):
+    task.workedhours_set.create(hours = hours, date = date)
+
+def taskHoursCompleted(request):
     return index(request, success='True')

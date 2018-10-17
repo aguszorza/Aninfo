@@ -1,5 +1,4 @@
-preguntar: el enunciado dice cargar horas por dia, pero nosotros los cargamos cuando se completa la tarea
 
-agregar relacion entre proyecyo y desarrollador
+agregar relacion entre proyecyo y desarrollador ??? no se si hace falta, porque segun nuestro modelo una tarea solo tiene un desarrollador
 
 agregar chequeos y pruebas

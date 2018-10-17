@@ -13,5 +13,10 @@ class Task(models.Model):
     developer = models.ForeignKey(Developer, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    completedTime = models.PositiveIntegerField(default=0)
+
+
+class WorkedHours(models.Model):
+    hours = models.PositiveIntegerField()
+    date = models.CharField(max_length=200)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
 

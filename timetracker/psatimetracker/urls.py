@@ -6,6 +6,6 @@ app_name = 'psatimetracker'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('completeTask/', views.completeTask, name='completeTask'),
-    path('completedTask/', views.taskCompleted, name='taskCompleted'),
+    path('completeTaskHours/', views.completeTaskHours, name='completeTaskHours'),
+    path('completedTaskHours/', views.taskHoursCompleted, name='completedTaskHours'),
 ]
