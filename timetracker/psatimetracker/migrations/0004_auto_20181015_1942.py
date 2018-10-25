@@ -8,9 +8,15 @@ def default_tasks(apps, schema_editor):
     Project = apps.get_model("psatimetracker", "Project")
     Task = apps.get_model("psatimetracker", "Task")
     for project in Project.objects.all():
+        task = Task(name = "Tarea para todos", project=project)
+        task.save()
         for dev in Developer.objects.all():
+            task.developers.add(dev)
             for i in range (1,4):
                 dev.task_set.create(name = "Tarea " + str(i) + ": " + dev.name, project=project)
+
+
+
 
 def delete_tasks(apps, schema_editor):
     Task = apps.get_model("psatimetracker", "Task")

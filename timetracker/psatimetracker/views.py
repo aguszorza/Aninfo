@@ -31,7 +31,7 @@ def completeTaskHours(request):
         if (error):
             return index(request, error=error)
 
-        saveHours(task, hours, date)
+        saveHours(task, hours, date, developer)
         return HttpResponseRedirect(reverse('psatimetracker:completedTaskHours'))
 
     except:
@@ -39,7 +39,7 @@ def completeTaskHours(request):
 
 
 def validateData(project, developer, task, hours, date):
-    if (task.developer != developer):
+    if len(task.developers.filter(id = developer.id)) == 0:
             return 'La tarea seleccionada no pertenece al desarrollador'
 
     if (task.project != project):
@@ -50,8 +50,8 @@ def validateData(project, developer, task, hours, date):
 
     return ''
 
-def saveHours(task, hours, date):
-    task.workedhours_set.create(hours = hours, date = date)
+def saveHours(task, hours, date, developer):
+    task.workedhours_set.create(hours = hours, date = date, developer=developer)
 
 def taskHoursCompleted(request):
     return index(request, success='True')

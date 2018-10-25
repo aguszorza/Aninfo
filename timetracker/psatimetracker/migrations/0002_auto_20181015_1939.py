@@ -19,7 +19,7 @@ def delete_developers(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('psatimetracker', '0001_initial'),
+        ('psatimetracker', '0006_auto_20181025_2011'),
     ]
 
     operations = [
