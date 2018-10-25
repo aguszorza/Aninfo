@@ -45,6 +45,9 @@ def validateData(project, developer, task, hours, date):
     if (task.project != project):
         return 'La tarea seleccionada no pertenece al proyecto'
 
+    if (len(task.workedhours_set.filter(date = date)) > 0):
+        return 'La tarea seleccionada ya tiene horas cargadas en esa fecha'
+
     return ''
 
 def saveHours(task, hours, date):

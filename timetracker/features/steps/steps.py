@@ -31,6 +31,12 @@ def step_impl(context):
 def step_impl(context):
     context.form['date'] = '2018-10-17'
 
+@when(u'i chose another date')
+def step_impl(context):
+    context.form['oldDate'] = context.form['date']
+    context.form['date'] = '2018-10-18'
+    assert context.form['date'] != context.form['oldDate']
+
 
 @when(u'i selected a task from other developer')
 def step_impl(context):
@@ -54,6 +60,12 @@ def step_impl(context):
     assert len(Task.objects.get(pk=context.form['task']).workedhours_set.all()) > 0
     assert context.response.context['success']
 
+@then(u'task will have two worked hours charged')
+def step_impl(context):
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.all()) == 2
+    assert context.response.context['success']
+
+
 @then(u'task will have worked hours for that date')
 def step_impl(context):
     assert len(Task.objects.get(pk=context.form['task']).workedhours_set.filter(date = context.form['date'])) > 0
@@ -64,7 +76,19 @@ def step_impl(context):
     assert len(Task.objects.get(pk=context.form['task']).workedhours_set.filter(date = context.form['date'], hours = context.form['hours'])) > 0
     assert context.response.context['success']
 
+@then(u'task will have worked hours for those dates and hours')
+def step_impl(context):
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.filter(date = context.form['date'], hours = context.form['hours'])) > 0
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.filter(date = context.form['oldDate'], hours = context.form['hours'])) > 0
+    assert context.response.context['success']
+
 @then(u'task will not have worked hours')
 def step_impl(context):
     assert len(Task.objects.get(pk=context.form['task']).workedhours_set.all()) == 0
     assert context.response.context['error']
+
+@then(u'task will have only one worked hours charged for that date')
+def step_impl(context):
+    assert len(Task.objects.get(pk=context.form['task']).workedhours_set.filter(date = context.form['date'])) == 1
+    assert context.response.context['error']
+
