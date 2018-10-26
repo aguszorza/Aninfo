@@ -12,6 +12,9 @@ def before_scenario(context, scenario):
         p.save()
 
     for project in Project.objects.all():
+        task = Task(name = "Tarea para todos", project=project)
+        task.save()
         for dev in Developer.objects.all():
+            task.developers.add(dev)
             for i in range (1,4):
                 dev.task_set.create(name = "Tarea " + str(i) + ": " + dev.name, project=project)

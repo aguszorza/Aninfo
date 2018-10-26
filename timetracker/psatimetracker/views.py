@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from .models import Developer, Task, Project
+from datetime import datetime
 
 
 def index(request, success='', error=''):
@@ -45,8 +46,16 @@ def validateData(project, developer, task, hours, date):
     if (task.project != project):
         return 'La tarea seleccionada no pertenece al proyecto'
 
-    if (len(task.workedhours_set.filter(date = date)) > 0):
-        return 'La tarea seleccionada ya tiene horas cargadas en esa fecha'
+    if (len(task.workedhours_set.filter(date = date, developer=developer)) > 0):
+        return 'La tarea seleccionada ya tiene horas cargadas en esa fecha para ese desarrollador'
+
+    if (int(hours) <= 0 or int(hours) >24):
+        return 'La cantidad de horas es invalida'
+
+    now = datetime.now().strftime('%Y-%m-%d')
+
+    if (date > now):
+        return 'La fecha es futura'
 
     return ''
 
