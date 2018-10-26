@@ -20,7 +20,7 @@ def step_impl(context):
 @when(u'i selected a task from that developer and that project')
 def step_impl(context):
     context.form['task'] = Task.objects.filter(project__id = context.form['project'], 
-                                                developer__id = context.form['developer'])[0].id
+                                                developers__id = context.form['developer'])[0].id
 
 
 @when(u'i chose 6 hours')
@@ -41,12 +41,12 @@ def step_impl(context):
 @when(u'i selected a task from other developer')
 def step_impl(context):
     context.form['task'] = Task.objects.filter(project__id = context.form['project']).exclude(
-                                                developer__id = context.form['developer'])[0].id
+                                                developers__id = context.form['developer'])[0].id
 
 @when(u'i selected a task from other project')
 def step_impl(context):
     context.form['task'] = Task.objects.exclude(project__id = context.form['project']).filter(
-                                                developer__id = context.form['developer'])[0].id
+                                                developers__id = context.form['developer'])[0].id
 
 @when(u'i submit the form')
 def step_impl(context):
