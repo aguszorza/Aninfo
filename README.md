@@ -1,8 +1,8 @@
-#Link a Heroku
+## Link a Heroku
 
-radiant-coast-34339.herokuapp.com/
+radiant-coast-34339.herokuapp.com
 
-#Instalacion
+## Instalacion
 
 pip3 install Django --user
 
@@ -10,21 +10,17 @@ pip3 install behave --user
 
 pip3 install behave-django --user
 
-#Para correrlo localmente
-
-cd a la carpeta
+## Para correrlo localmente
 
 python3 manage.py runserver
 
 ir a http://localhost:8000
 
-
-#Para correr las pruebas
+## Para correr las pruebas
 
 python3 manage.py behave
 
-
-#Migraciones:
+## Migraciones:
 
 python3 manage.py migrate psatimetracker zero
 
