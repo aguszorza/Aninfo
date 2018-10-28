@@ -1,4 +1,4 @@
 
-agregar relacion entre proyecyo y desarrollador ??? no se si hace falta, porque segun nuestro modelo una tarea solo tiene un desarrollador
+agregar relacion entre proyecyo y desarrollador ??? no se si hace falta, p
 
 agregar chequeos y pruebas
