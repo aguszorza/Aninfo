@@ -25,7 +25,7 @@ SECRET_KEY = 'hv23$#n^k8#!0c07azp8dbk0=6ka3e&op5(qq(i**4au_u2$(y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['radiant-coast-34339.herokuapp.com', 'localhost']
 
 
 # Application definition
