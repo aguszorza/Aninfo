@@ -32,7 +32,7 @@ def completeTaskHours(request):
         if (error):
             return index(request, error=error)
 
-        saveHours(task, hours, date, developer)
+        developer.assignWorkedHours(task, hours, date)
         return HttpResponseRedirect(reverse('psatimetracker:completedTaskHours'))
 
     except:
@@ -59,8 +59,6 @@ def validateData(project, developer, task, hours, date):
 
     return ''
 
-def saveHours(task, hours, date, developer):
-    task.workedhours_set.create(hours = hours, date = date, developer=developer)
 
 def taskHoursCompleted(request):
     return index(request, success='True')

@@ -6,6 +6,9 @@ from django.db import models
 class Developer(models.Model):
     name = models.CharField(max_length=200)
 
+    def assignWorkedHours(self, task, hours, date):
+        task.workedhours_set.create(hours = hours, date = date, developer = self)
+
 class Project(models.Model):
     name = models.CharField(max_length=200)
 
@@ -13,6 +16,7 @@ class Task(models.Model):
     developers = models.ManyToManyField(Developer)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
+
 
 
 class WorkedHours(models.Model):
